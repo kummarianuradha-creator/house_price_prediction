@@ -1,4 +1,10 @@
+import os
+import pickle
+from flask import Flask, render_template, request
 
+app = Flask(__name__)
+
+model_path = "model.pkl"
 
 if os.path.exists(model_path):
     model = pickle.load(open(model_path, "rb"))
@@ -19,5 +25,6 @@ def predict():
 
 if __name__ == "__main__":
     app.run()
+
 
 
