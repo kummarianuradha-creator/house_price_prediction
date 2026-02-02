@@ -1,10 +1,10 @@
-import os
+from flask import Flask
 
-model = None
-model_path = os.path.join(os.getcwd(),"house_model.pkl")
+app = Flask(__name__)
 
-if os.path.exists(model_path):
-    model = pickel.load(open(model_path,"rb"))
-else:
-    print("model file not found")
+@app.route("/")
+def home():
+    return "House Price Website is running successfully ✅"
 
+if __name__ == "__main__":
+    app.run()
