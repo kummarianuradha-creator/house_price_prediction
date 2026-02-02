@@ -1,27 +1,10 @@
-from flask import Flask, render_template, request
-import pickle
+import os
 
-app = Flask(__name__)
+model = None
+model_path = os.path.join(os.getcwd(),"house_model.pkl")
 
-# Load the trained model
-model = pickle.load(open("house_model.pkl", "rb"))
+if os.path.exists(model_path):
+    model = pickel.load(open(model_path,"rb"))
+else:
+    print("model file not found")
 
-@app.route('/')
-def home():
-    return render_template("index.html")
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    # Get data from form
-    area = float(request.form['area'])
-    bedrooms = int(request.form['bedrooms'])
-    bathrooms = int(request.form['bathrooms'])
-
-    # Predict price
-    price = model.predict([[area, bedrooms, bathrooms]])
-
-    return render_template("index.html",
-        prediction_text=f"Predicted Price: ₹ {round(price[0], 2)}")
-
-if __name__ == "__main__":
-    app.run(debug=True)
