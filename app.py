@@ -1,22 +1,23 @@
 
-from flask import Flask
-import os
-import pickle
-
-app = Flask(__name__)
-
-model = None
-model_path = os.path.join(os.getcwd(), "house_model.pkl")
 
 if os.path.exists(model_path):
     model = pickle.load(open(model_path, "rb"))
-else:
-    print("model file not found")
 
 @app.route("/")
 def home():
-    return "House Price Website is running successfully ✅"
+    return render_template("index.html")
+
+@app.route("/predict", methods=["POST"])
+def predict():
+    area = float(request.form["area"])
+    bedrooms = int(request.form["bedrooms"])
+    bathrooms = int(request.form["bathrooms"])
+
+    price = model.predict([[area, bedrooms, bathrooms]])[0]
+
+    return f"<h2>Estimated Price: ₹ {round(price,2)}</h2>"
 
 if __name__ == "__main__":
     app.run()
+
 
