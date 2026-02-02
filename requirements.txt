@@ -1,4 +1,8 @@
 flask
 gunicorn
 werkzeug
+numpy
+pandas
+scikit-learn
+
 
