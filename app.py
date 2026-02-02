@@ -4,6 +4,8 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+print(os.listdir())
+
 model_path = "model.pkl"
 
 if os.path.exists(model_path):
@@ -25,6 +27,7 @@ def predict():
 
 if __name__ == "__main__":
     app.run()
+
 
 
 
