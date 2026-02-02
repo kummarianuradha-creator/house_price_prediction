@@ -1,48 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>House & Flat Price Information</title>
+    <meta charset="UTF-8">
+    <title>House Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<h1>House and Flat Price Information</h1>
+    <h1>House Price Prediction</h1>
 
-<p>
-This website provides general information about flat and house prices
-and allows users to upload house or flat photos.
-</p>
+    <form action="/predict" method="post">
+        <label>Area (sq ft):</label><br>
+        <input type="number" name="area" required><br><br>
 
-<hr>
+        <label>Bedrooms:</label><br>
+        <input type="number" name="bedrooms" required><br><br>
 
-<h2>Average Flat Prices</h2>
-<ul>
-    <li>1 BHK: ₹20 – ₹35 Lakhs</li>
-    <li>2 BHK: ₹35 – ₹60 Lakhs</li>
-    <li>3 BHK: ₹60 Lakhs – ₹1 Crore</li>
-</ul>
+        <label>Bathrooms:</label><br>
+        <input type="number" name="bathrooms" required><br><br>
 
-<h2>Average House Prices</h2>
-<ul>
-    <li>Independent House: ₹40 – ₹80 Lakhs</li>
-    <li>Luxury House: ₹1 Crore and above</li>
-</ul>
+        <button type="submit">Predict Price</button>
+    </form>
 
-<hr>
-
-<h2>Upload House / Flat Photos</h2>
-<form action="/upload" method="POST" enctype="multipart/form-data">
-    <input type="file" name="photo" accept="image/*" required>
-    <br><br>
-    <button type="submit">Upload Photo</button>
-</form>
-
-<hr>
-
-<h2>Uploaded Photos</h2>
-{% for image in images %}
-    <img src="{{ url_for('static', filename='uploads/' + image) }}"
-         width="250" style="margin:10px;">
-{% endfor %}
+    {% if prediction %}
+        <h2>Predicted Price: {{ prediction }}</h2>
+    {% endif %}
 
 </body>
 </html>
